@@ -10,12 +10,7 @@ The easiest way to use this code is to install it using `pip`.
 
 2. Add `import dkimg` to your python script.
 
-_Note_
-
-> The testing directory is excluded from install as it is only used
-> to test classes and additions during development
-
-## Documentation
+## Documentation (TODO)
 
 > Documentation is done using [sphinx](https://www.sphinx-doc.org/en/master/index.html). There is a sphinx tutorial [here](docs/brandons-sphinx-tutorial.pdf).
 
