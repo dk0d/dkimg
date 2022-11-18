@@ -492,7 +492,10 @@ class Image(np.ndarray):
     def __new__(
         cls,
         src: Optional[Union[Pathlike, np.ndarray, List[List[Image]]]] = None,
-        colorSpace: ColorSpace = ColorSpace.rgb, name=None, **kwargs
+        colorSpace: ColorSpace = ColorSpace.rgb,
+        name=None,
+        opencvflags=None,
+        **kwargs
     ):
         """
         Initializer for Image
@@ -501,10 +504,14 @@ class Image(np.ndarray):
         :param colorSpace: defaults to ColorSpace.rgb.  Note that OpenCV defaults to BGR when reading images from a file path
         """
 
+        opencvflags = [] if opencvflags is None else opencvflags
+
         if isinstance(src, (str, Path)):
             src = Path(src)
             name: Optional[str] = src.name
-            data: np.ndarray = cv.imread(src.resolve().as_posix())
+            if src.suffix in ['.hdr']:
+                opencvflags.append(cv.IMREAD_ANYDEPTH)
+            data: np.ndarray = cv.imread(src.resolve().as_posix(), *opencvflags)
             data = cv.cvtColor(data, cv.COLOR_BGR2RGB)
             colorSpace = ColorSpace.rgb
         elif isinstance(src, List) and isinstance(src[0], List) and isinstance(src[0][0], Image):
