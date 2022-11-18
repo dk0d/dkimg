@@ -1,0 +1,12 @@
+
+.document {
+    width: 95% !important;
+}
+
+div.body {
+    max-width: 98% !important;
+}
+
+td {
+    overflow: hidden;
+}
