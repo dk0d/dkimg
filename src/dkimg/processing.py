@@ -12,6 +12,7 @@ import inspect
 from abc import abstractmethod
 import copy
 
+
 @dataclass
 class ProcessIO(dict):
     UNDEFINED = Undefined()
@@ -519,12 +520,14 @@ class ImageProcess(Process):
         io = ImageIO() if ioSpec is None else ioSpec
         super().__init__(name=name, ioSpec=io)
 
-    def _plotStagesMatplotlib(self, stages: List[Tuple[str, Image]], figsize=(20,15), saveDir: Path = None, name: str = None, maxCols=4):
+    def _plotStagesMatplotlib(
+        self, stages: List[Tuple[str, Image]], figsize=(20, 15), saveDir: Path = None, name: str = None, maxCols=4
+    ):
         numStages = len(stages)
         ncols = min(numStages, maxCols)
         nrows = int(np.ceil(numStages / ncols))
         fig = plt.figure(figsize=figsize, constrained_layout=True)
-        fig.set_constrained_layout_pads(w_pad=4./72, h_pad=4./72, hspace=0, vspace=0)
+        fig.set_constrained_layout_pads(w_pad=4. / 72, h_pad=4. / 72, hspace=0, vspace=0)
 
         gs = plt.GridSpec(nrows, ncols, figure=fig)
 
@@ -580,13 +583,14 @@ class ImageProcess(Process):
     #
     #     p = bplotting.figure()
 
-
-    def plotStages(self: ImageProcess,
-                   saveDir: Path = None,
-                   name: str = None,
-                   figsize=(20,10),
-                   maxCols=4,
-                   ignoreDuplicateResults=False):
+    def plotStages(
+        self: ImageProcess,
+        saveDir: Path = None,
+        name: str = None,
+        figsize=(20, 10),
+        maxCols=4,
+        ignoreDuplicateResults=False
+    ):
 
         stages: List[Tuple[str, Image]] = [(f'Original Image ({self.input.image.name})', self.input.image)]
 
@@ -618,4 +622,3 @@ class ImageProcess(Process):
             return
 
         self._plotStagesMatplotlib(stages, figsize=figsize, saveDir=saveDir, name=name, maxCols=maxCols)
-
