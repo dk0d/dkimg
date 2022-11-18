@@ -9,9 +9,9 @@ The easiest way to use this code is to install it using `pip`.
 
     `cd imageprocessing`
 
-    `pip install git+https://github.com/dk0d/imageprocessing@main`
+    `pip install git+https://github.com/dk0d/dkimg@main`
 
-3. Add `import imageprocessing` to your python script.
+3. Add `import dkimg` to your python script.
 
 _Note_
 
