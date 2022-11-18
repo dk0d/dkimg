@@ -450,12 +450,14 @@ class Color(np.ndarray):
         return Color(cv.cvtColor(self.reshape((-1, 1, 3)).astype(np.uint8), cv.COLOR_HSV2RGB).reshape((3,)),
                      colorSpace=ColorSpace.rgb, label=self.label, count=self.count, freq=self.freq)
 
-    def __new__(cls, value: Iterable,
-                colorSpace: ColorSpace,
-                label: int = None,
-                count: int = None,
-                freq: float = None,
-                **kwargs):
+    def __new__(
+        cls, value: Iterable,
+        colorSpace: ColorSpace,
+        label: int = None,
+        count: int = None,
+        freq: float = None,
+        **kwargs
+        ):
 
         arr: Color = np.asarray(value, **kwargs).view(cls)
         arr.colorSpace = colorSpace
@@ -485,8 +487,10 @@ class Image(np.ndarray):
     name: str
     colorSpace: ColorSpace
 
-    def __new__(cls, src: Optional[Union[Path, np.ndarray, List[List[Image]]]] = None,
-                colorSpace: ColorSpace = ColorSpace.rgb, name=None, **kwargs):
+    def __new__(
+        cls, src: Optional[Union[Path, np.ndarray, List[List[Image]]]] = None,
+        colorSpace: ColorSpace = ColorSpace.rgb, name=None, **kwargs
+        ):
         """
         Initializer for Image
 
@@ -742,13 +746,15 @@ class Image(np.ndarray):
     def vectorized(self):
         return self.reshape(self.shape[0] * self.shape[1], 3)
 
-    def extractColors(self, numColors: int = 5,
-                      resize: bool = True,
-                      colorSpace=ColorSpace.hsv,
-                      targetWidth: int = 640,
-                      patchSize: int = 100,
-                      method='opencv',
-                      mask=None):
+    def extractColors(
+        self, numColors: int = 5,
+        resize: bool = True,
+        colorSpace=ColorSpace.hsv,
+        targetWidth: int = 640,
+        patchSize: int = 100,
+        method='opencv',
+        mask=None
+        ):
         """
         Uses K-Means to extract the top `numColors` colors in the image.
 
@@ -825,8 +831,10 @@ class Image(np.ndarray):
 
 class Component:
 
-    def __init__(self, shape: Union[Vertices, Rect, BoundingBox, str, np.ndarray], regionprops=None,
-                 data: pd.Series = None):
+    def __init__(
+        self, shape: Union[Vertices, Rect, BoundingBox, str, np.ndarray], regionprops=None,
+        data: pd.Series = None
+        ):
         """
 
         :param shape: string shape is assumed to be a string of vertices

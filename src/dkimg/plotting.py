@@ -25,12 +25,14 @@ class ColorPair:
         self.color2 = color2
 
 
-def pairPlot(data,
-             plotSets,
-             hue=None,
-             title=None,
-             colPrefix="",
-             savePath: Path = None):
+def pairPlot(
+    data,
+    plotSets,
+    hue=None,
+    title=None,
+    colPrefix="",
+    savePath: Path = None
+):
     for setTitle, pset in plotSets.items():
         plotcols = [f'{colPrefix}{p}' for p in pset]
         g = sb.pairplot(data=data, vars=plotcols, hue=hue)
@@ -40,12 +42,14 @@ def pairPlot(data,
             plt.savefig(savePath.as_posix())
 
 
-def plotComponents(components: List[Component],
-                   image: Image = None,
-                   title=None,
-                   polyColors: Union[str, Tuple[float, float, float]] = 'r',
-                   label=None,
-                   ax: plt.Axes = None):
+def plotComponents(
+    components: List[Component],
+    image: Image = None,
+    title=None,
+    polyColors: Union[str, Tuple[float, float, float]] = 'r',
+    label=None,
+    ax: plt.Axes = None
+):
     if ax is None:
         fig, ax = plt.subplots(1)
 

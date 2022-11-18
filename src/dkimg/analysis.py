@@ -363,8 +363,10 @@ class ImageAnnotation:
                                 ax=ax)
 
     @staticmethod
-    def intersectionType(labelRect: Union[BoundingBox, list],
-                         detectedRect: Union[BoundingBox, list]) -> IntersectionType:
+    def intersectionType(
+        labelRect: Union[BoundingBox, list],
+        detectedRect: Union[BoundingBox, list]
+        ) -> IntersectionType:
         labeled = Rect(labelRect)
         detected = Rect(detectedRect)
         lArea = labeled.area
@@ -770,7 +772,6 @@ class ComponentAnalysis:
                 summaryTable = newTable.append(summaryTable, ignore_index=True)
         return summaryTable
 
-
     @staticmethod
     def colorImageStatsFor(image: Image, mask=None):
         means, stds = cv.meanStdDev(image, mask=mask)
@@ -874,10 +875,12 @@ class ComponentDetection:
         pass
 
     @staticmethod
-    def baselineCompare(image: Image,
-                        annotations: ImageAnnotation,
-                        savePath: Path = None,
-                        minAreaThresh=defaultMinComponentArea, maxAreaThresh=defaultMaxComponentArea, plotStages=False):
+    def baselineCompare(
+        image: Image,
+        annotations: ImageAnnotation,
+        savePath: Path = None,
+        minAreaThresh=defaultMinComponentArea, maxAreaThresh=defaultMaxComponentArea, plotStages=False
+        ):
         results: List[ComponentDetectionResult] = []
 
         def addResult(_res: ComponentDetectionResult):
@@ -998,8 +1001,10 @@ class ComponentDetection:
         return ComponentDetectionResult(process, boxes)
 
     @staticmethod
-    def findComponentsOtsu(minAreaThresh=defaultMinComponentArea, maxAreaThresh=defaultMaxComponentArea,
-                           smoothingSize=7) -> ComponentDetectionResult:
+    def findComponentsOtsu(
+        minAreaThresh=defaultMinComponentArea, maxAreaThresh=defaultMaxComponentArea,
+        smoothingSize=7
+        ) -> ComponentDetectionResult:
         io = ImageIO(_func=ComponentDetection.findComponentsOtsu, _setParams=locals())
         process = io.initProcess("Otsu's Thresholding")
         process.addProcess(alg.medianBlurProcess(ksize=smoothingSize))
@@ -1011,8 +1016,9 @@ class ComponentDetection:
 
     # TODO: Adaptive Histogram Thresholding
     @staticmethod
-    def findComponentsAdaptiveThresholding(minAreaThresh=defaultMinComponentArea,
-                                           maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
+    def findComponentsAdaptiveThresholding(
+        minAreaThresh=defaultMinComponentArea,
+        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
         io = ImageIO(_func=ComponentDetection.findComponentsAdaptiveThresholding, _setParams=locals())
         process = io.initProcess("Adaptive Thresholding")
         process.addProcess(alg.adaptiveThresholdProcess())
@@ -1020,24 +1026,27 @@ class ComponentDetection:
 
     # TODO: Background subtraction
     @staticmethod
-    def findComponentsBackgroundGaussianSubtraction(minAreaThresh=defaultMinComponentArea,
-                                                    maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
+    def findComponentsBackgroundGaussianSubtraction(
+        minAreaThresh=defaultMinComponentArea,
+        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
         io = ImageIO(_func=ComponentDetection.findComponentsBackgroundGaussianSubtraction, _setParams=locals())
         process = io.initProcess("Gaussian Background Sub")
         process.addProcess(alg.gmmBackroundMask())
         return ComponentDetection.findComponents(process)
 
     @staticmethod
-    def findComponentsGraphCut(image: Image, minAreaThresh=defaultMinComponentArea,
-                               maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
+    def findComponentsGraphCut(
+        image: Image, minAreaThresh=defaultMinComponentArea,
+        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
         process = ImageIO(_func=ComponentDetection.findComponentsGraphCut, _setParams=locals()).initProcess(
             "GraphCut")
         process.addProcess(alg.graphCutSegmentation())
         return ComponentDetection.findComponents(process)
 
     @staticmethod
-    def findComponentsEfficientGraphCut(minAreaThresh=defaultMinComponentArea,
-                                        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
+    def findComponentsEfficientGraphCut(
+        minAreaThresh=defaultMinComponentArea,
+        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
         process = ImageIO(_func=ComponentDetection.findComponentsEfficientGraphCut,
                           _setParams=locals()).initProcess("Efficient GraphCut")
         process.addProcess(alg.efficientGraphSegmentation(scale=300,
@@ -1046,8 +1055,9 @@ class ComponentDetection:
         return ComponentDetection.findComponents(process)
 
     @staticmethod
-    def findComponentsWatershed(minAreaThresh=defaultMinComponentArea,
-                                maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
+    def findComponentsWatershed(
+        minAreaThresh=defaultMinComponentArea,
+        maxAreaThresh=defaultMaxComponentArea, ) -> ComponentDetectionResult:
         process = ImageIO(_func=ComponentDetection.findComponentsWatershed, _setParams=locals()).initProcess(
             "Watershed")
         process.addProcess(alg.watershedProcess())

@@ -125,12 +125,14 @@ def labels2rgb(labels):
     return cv.LUT(cv.merge((labels, labels, labels)).astype(np.uint8), gen_lut())
 
 
-def gmmBackroundMask(image: Optional[Image] = None,
-                     resizeImage: tuple = None,
-                     nComponents=5,
-                     verbose=False,
-                     plotResults=False,
-                     name: str = None) -> ImageProcess:
+def gmmBackroundMask(
+    image: Optional[Image] = None,
+    resizeImage: tuple = None,
+    nComponents=5,
+    verbose=False,
+    plotResults=False,
+    name: str = None
+    ) -> ImageProcess:
     """
     Creates a background mask using a Gaussian Mixture model.  Currently assumes 3 components
 
@@ -282,6 +284,7 @@ def medianBlurProcess(image: Optional[Image] = None, ksize=5):
 def bilateral_filter(_image, _d=-1, _sigmaColor=41, _sigmaSpace=31):
     return ImageIO(image=cv.bilateralFilter(_image, d=_d, sigmaColor=_sigmaColor, sigmaSpace=_sigmaSpace))
 
+
 # Bilateral filter
 def bilateralFilter(image: Optional[Image] = None, d=-1, sigmaColor=41, sigmaSpace=31):
     proc = ImageIO(_func=bilateralFilter, _setParams=locals()).initProcess("Bilateral Filter")
@@ -334,7 +337,6 @@ def spatialGradient(_image: Image) -> ImageIO:
     else:
         out = _grad(_image)
     return ImageIO(image=out)
-
 
 
 def laplacianGradient(_image: Image) -> ImageIO:
@@ -495,8 +497,10 @@ def otsuThresholdProcess(name: str = None, binaryOutput=False) -> ImageProcess:
 
 # Adaptive Thresholding
 
-def adaptiveThresholdProcess(blockSize: tuple = (15, 15), center: int = 0,
-                             smoothingKernelSize=5, name=None) -> ImageProcess:
+def adaptiveThresholdProcess(
+    blockSize: tuple = (15, 15), center: int = 0,
+    smoothingKernelSize=5, name=None
+    ) -> ImageProcess:
     n = "adaptive thresholding" if name is None else name
     proc = ImageIO(_func=adaptiveThresholdProcess, _setParams=locals()).initProcess(n)
 
@@ -607,12 +611,14 @@ def watershed(mask: Optional[np.ndarray] = None, name: str = None):
 
 
 # Watershed
-def watershedProcess(image: Optional[Image] = None,
-                     shiftSpatialWindow=41,
-                     shiftColorRadius=55,
-                     numFindColors: Optional[int] = None,
-                     mask: Optional[np.ndarray] = None,
-                     name=None) -> ImageProcess:
+def watershedProcess(
+    image: Optional[Image] = None,
+    shiftSpatialWindow=41,
+    shiftColorRadius=55,
+    numFindColors: Optional[int] = None,
+    mask: Optional[np.ndarray] = None,
+    name=None
+    ) -> ImageProcess:
     n = name if name is not None else "Watershed"
     proc = ImageIO(_func=watershedProcess, _setParams=locals()).initProcess(n)
 
@@ -665,10 +671,12 @@ def watershedProcess(image: Optional[Image] = None,
     return proc
 
 
-def graphCutSegmentation(image: Optional[Image] = None,
-                         compactness=10.,
-                         numSegs=None,
-                         mode="similarity", name=None) -> ImageProcess:
+def graphCutSegmentation(
+    image: Optional[Image] = None,
+    compactness=10.,
+    numSegs=None,
+    mode="similarity", name=None
+    ) -> ImageProcess:
     numSegs = numSegs if numSegs is not None else int(np.median(image.shape) / 4.0)
     n = name if name is not None else "GraphCut"
     proc = ImageIO(_func=graphCutSegmentation, _setParams=locals()).initProcess(n)
@@ -706,11 +714,13 @@ def label2rgb(labels: np.ndarray = None) -> ImageProcess:
     return proc
 
 
-def efficientGraphSegmentation(image: Optional[Image] = None,
-                               scale=200.,
-                               sigma=0.8,
-                               min_size=400,
-                               name=None) -> ImageProcess:
+def efficientGraphSegmentation(
+    image: Optional[Image] = None,
+    scale=200.,
+    sigma=0.8,
+    min_size=400,
+    name=None
+    ) -> ImageProcess:
     """ Based on 'Efficient Graph Based Image Segmentation'
         Graph segmentation help
         https://www.youtube.com/watch?v=iDKeR_swA8g
