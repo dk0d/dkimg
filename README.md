@@ -4,14 +4,11 @@
 
 The easiest way to use this code is to install it using `pip`.
 
-1. Clone the repo into any directory you'd like
-2. Run the following commands
-
-    `cd imageprocessing`
+1. Run the following command
 
     `pip install git+https://github.com/dk0d/dkimg@main`
 
-3. Add `import dkimg` to your python script.
+2. Add `import dkimg` to your python script.
 
 _Note_
 
