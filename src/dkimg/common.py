@@ -507,8 +507,6 @@ class Image(np.ndarray):
         if isinstance(src, (str, Path)):
             src = Path(src)
             name: Optional[str] = src.name
-            if src.suffix in ['.hdr']:
-                opencvflags.append(cv.IMREAD_ANYDEPTH)
             data: np.ndarray = cv.imread(src.resolve().as_posix(), flags=opencvflags)
             data = cv.cvtColor(data, cv.COLOR_BGR2RGB)
             colorSpace = ColorSpace.rgb
