@@ -457,7 +457,7 @@ class Color(np.ndarray):
         count: int = None,
         freq: float = None,
         **kwargs
-        ):
+    ):
 
         arr: Color = np.asarray(value, **kwargs).view(cls)
         arr.colorSpace = colorSpace
@@ -490,7 +490,7 @@ class Image(np.ndarray):
     def __new__(
         cls, src: Optional[Union[Path, np.ndarray, List[List[Image]]]] = None,
         colorSpace: ColorSpace = ColorSpace.rgb, name=None, **kwargs
-        ):
+    ):
         """
         Initializer for Image
 
@@ -708,7 +708,7 @@ class Image(np.ndarray):
 
         return np.argmax(hist)
 
-    def show(self: Image, cmap='afmhot'):
+    def show(self: Image, cmap='afmhot', savePath: Path = None):
         plt.figure()
         if self.numChannels == 1:
             plt.imshow(self, cmap=cmap)
@@ -716,7 +716,10 @@ class Image(np.ndarray):
             plt.imshow(self)
         plt.axis('off')
         plt.title(self.name)
-        plt.show()
+        if savePath is None:
+            plt.show()
+        else:
+            plt.savefig(savePath.as_posix())
 
     def plotImageColors3D(self, resize=None):
         if resize is not None:
@@ -754,7 +757,7 @@ class Image(np.ndarray):
         patchSize: int = 100,
         method='opencv',
         mask=None
-        ):
+    ):
         """
         Uses K-Means to extract the top `numColors` colors in the image.
 
@@ -834,7 +837,7 @@ class Component:
     def __init__(
         self, shape: Union[Vertices, Rect, BoundingBox, str, np.ndarray], regionprops=None,
         data: pd.Series = None
-        ):
+    ):
         """
 
         :param shape: string shape is assumed to be a string of vertices

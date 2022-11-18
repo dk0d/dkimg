@@ -132,7 +132,7 @@ def gmmBackroundMask(
     verbose=False,
     plotResults=False,
     name: str = None
-    ) -> ImageProcess:
+) -> ImageProcess:
     """
     Creates a background mask using a Gaussian Mixture model.  Currently assumes 3 components
 
@@ -500,7 +500,7 @@ def otsuThresholdProcess(name: str = None, binaryOutput=False) -> ImageProcess:
 def adaptiveThresholdProcess(
     blockSize: tuple = (15, 15), center: int = 0,
     smoothingKernelSize=5, name=None
-    ) -> ImageProcess:
+) -> ImageProcess:
     n = "adaptive thresholding" if name is None else name
     proc = ImageIO(_func=adaptiveThresholdProcess, _setParams=locals()).initProcess(n)
 
@@ -618,7 +618,7 @@ def watershedProcess(
     numFindColors: Optional[int] = None,
     mask: Optional[np.ndarray] = None,
     name=None
-    ) -> ImageProcess:
+) -> ImageProcess:
     n = name if name is not None else "Watershed"
     proc = ImageIO(_func=watershedProcess, _setParams=locals()).initProcess(n)
 
@@ -676,7 +676,7 @@ def graphCutSegmentation(
     compactness=10.,
     numSegs=None,
     mode="similarity", name=None
-    ) -> ImageProcess:
+) -> ImageProcess:
     numSegs = numSegs if numSegs is not None else int(np.median(image.shape) / 4.0)
     n = name if name is not None else "GraphCut"
     proc = ImageIO(_func=graphCutSegmentation, _setParams=locals()).initProcess(n)
@@ -720,7 +720,7 @@ def efficientGraphSegmentation(
     sigma=0.8,
     min_size=400,
     name=None
-    ) -> ImageProcess:
+) -> ImageProcess:
     """ Based on 'Efficient Graph Based Image Segmentation'
         Graph segmentation help
         https://www.youtube.com/watch?v=iDKeR_swA8g
