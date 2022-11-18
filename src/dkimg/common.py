@@ -504,14 +504,12 @@ class Image(np.ndarray):
         :param colorSpace: defaults to ColorSpace.rgb.  Note that OpenCV defaults to BGR when reading images from a file path
         """
 
-        opencvflags = [] if opencvflags is None else opencvflags
-
         if isinstance(src, (str, Path)):
             src = Path(src)
             name: Optional[str] = src.name
             if src.suffix in ['.hdr']:
                 opencvflags.append(cv.IMREAD_ANYDEPTH)
-            data: np.ndarray = cv.imread(src.resolve().as_posix(), *opencvflags)
+            data: np.ndarray = cv.imread(src.resolve().as_posix(), flags=opencvflags)
             data = cv.cvtColor(data, cv.COLOR_BGR2RGB)
             colorSpace = ColorSpace.rgb
         elif isinstance(src, List) and isinstance(src[0], List) and isinstance(src[0][0], Image):
