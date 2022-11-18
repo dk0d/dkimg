@@ -23,6 +23,8 @@ import sys
 
 jsonpickle_numpy.register_handlers()
 
+Pathlike = Union[Path, str]
+
 
 # def maximizePlot():
 #
@@ -708,7 +710,7 @@ class Image(np.ndarray):
 
         return np.argmax(hist)
 
-    def show(self: Image, cmap='afmhot', savePath: Path = None):
+    def show(self: Image, cmap='afmhot', savePath: Pathlike = None):
         plt.figure()
         if self.numChannels == 1:
             plt.imshow(self, cmap=cmap)
@@ -719,7 +721,7 @@ class Image(np.ndarray):
         if savePath is None:
             plt.show()
         else:
-            plt.savefig(savePath.as_posix())
+            plt.savefig(Path(savePath).resolve().as_posix())
 
     def plotImageColors3D(self, resize=None):
         if resize is not None:
